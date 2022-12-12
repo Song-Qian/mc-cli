@@ -1,0 +1,185 @@
+@import './variables';
+@import './themes';
+
+html, body, #app {
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+}
+
+.mc-header {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 10px 10px;
+    box-sizing: border-box;
+
+
+    > ul {
+        list-style: none;
+        text-align: center;
+        padding-inline-start:0px;
+
+        > li {
+            cursor: pointer;
+            padding: 5px 10px;
+            position: relative;
+            display: inline-block;
+
+            &::after {
+                content: " ";
+                width: 0%;
+                height: 5px;
+                bottom: -1em;
+                left: 50%;
+                position: absolute;
+                border-radius:2.5px;
+                transform: translateX(-50%);
+                transition: width 0.5s ease;
+                background-color: themeFactory('base', 'menu-item__hover');
+            }
+
+            &:hover::after {
+                width: 100%;
+            }
+        }
+    }
+}
+
+.mc-logo {
+    display: inline-block;
+    vertical-align: text-bottom;
+    width: 30px;
+    height: 30px;
+    border-radius: 12px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url(../images/favicon-48x48.png);
+
+    ~ .mc-title {
+        font-weight: bold;
+        font-size: 1.5em;
+        margin-left: 10px;
+    }
+}
+
+.mc-container {
+    width: 100%;
+    text-align: center;
+
+    > h2, h3 {
+        font-weight: bold;
+    }
+
+    > .mc-colors {
+        left: 50%;
+        width: 100%;
+        position: fixed;
+        top: calc(50% + 300px);
+        transform: translate(-50%, -50%);
+    }
+}
+
+.mc-preserve {
+    top: 50%;
+    left: 50%;
+    width: 500px;
+    height: 500px;
+    position: fixed;
+    border-radius: 100px;
+    transform: translate(-50%, -50%) scale(.7);
+
+    > .mc-shell {
+        width: 200px;
+        height: 200px;
+        top: 50%;
+        left: 50%;
+        position: absolute;
+        transform-style: preserve-3d;
+        box-sizing: border-box;
+        perspective-origin: center center;
+        transform: translate(-50%, -50%) rotateX(345deg) rotateY(45deg);
+
+        > div[class^='mc-shell-side'] {
+            width: 200px;
+            height: 200px;
+            display: none;
+            position: absolute;
+            box-sizing: border-box;
+            border-top-width: 3px;
+            border-top-style: solid;
+            border-left-width: 3px;
+            border-left-style: solid;
+        }
+
+        > .mc-shell-side1 {
+            display: block !important;
+            transform: rotateY(0deg) translateZ(-100px);
+        }
+
+        > .mc-shell-side2 {
+            display: block !important;
+            transform: rotateY(90deg) translateZ(100px);
+        }
+
+        > .mc-shell-side3 {
+            display: block !important;
+            transform: rotateX(-90deg) translateZ(100px);
+        }
+        
+    }
+
+    > .mc-core {
+        width: 150px;
+        height: 150px;
+        top: 50%;
+        left: 50%;
+        position: absolute;
+        box-sizing: border-box;
+        transform-style: preserve-3d;
+        perspective-origin: center center;
+        transform: translate(-50%, -50%) rotateX(345deg) rotateY(45deg);
+        transition: transform 1s linear;
+
+        > svg[class^='mc-core-side'] {
+            width: 150px;
+            height: 150px;
+            display: none;
+            position: absolute;
+            box-sizing: border-box;
+        }
+
+        > .mc-core-side1 {
+            display: block !important;
+            transform:rotateX(90deg) rotateZ(90deg) translateZ(75px);
+        }
+
+        > .mc-core-side2 {
+            display: block !important;
+            transform:translateZ(75px);
+        }
+
+        > .mc-core-side3 {
+            display: block !important;
+            transform: rotateY(-90deg) translateZ(75px);
+        }
+
+        > .mc-core-side4 {
+            display: block !important;
+            transform:rotateX(90deg) rotateZ(-90deg) translateZ(-75px);
+        }
+
+        > .mc-core-side5 {
+            display: block !important;
+            transform: rotateZ(180deg) translateZ(-75px);
+        }
+
+        > .mc-core-side6 {
+            display: block !important;
+            transform: rotateY(-90deg) rotateZ(180deg) translateZ(-75px);
+        }
+        
+    }
+}

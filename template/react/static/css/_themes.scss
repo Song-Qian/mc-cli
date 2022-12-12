@@ -1,0 +1,42 @@
+/**
+*   Developer   :   SongQian
+*   Time        :   2021/06/01
+*   eMail       :   onlylove1172559463@vip.qq.com
+*   Description :   动态皮肤生成
+**/
+
+@for $i from 1 through length($themes) {
+
+    $name: nth($themes, $i);
+
+    .mc-#{$name}-theme {
+        background-color: themeFactory($name, 'background');
+
+        .mc-header {
+            background-color: themeFactory($name, 'header');
+            color: themeFactory($name, 'text-color');
+        }
+
+        .mc-header > ul > li::after {
+            background-color: themeFactory($name, 'menu-item__hover');
+        }
+
+        .mc-preserve {
+            background-color: themeFactory($name, 'magic-cube');
+            > .mc-shell > div[class^='mc-shell-side'] {
+                border-top-color: themeFactory($name, 'magic-cube-border-color');
+                border-left-color: themeFactory($name, 'magic-cube-border-color');
+                background-color: themeFactory($name, 'magic-cube-shell');
+            }
+
+            > .mc-core > svg[class^='mc-core-side'] {
+                border:0px solid themeFactory($name, 'magic-cube-border-color');
+                background-color: themeFactory($name, 'magic-cube-core');
+                
+                path {
+                    stroke : themeFactory($name, 'magic-cube-svg-line');
+                }
+            }
+        }
+    }
+}

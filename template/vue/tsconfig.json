@@ -1,0 +1,33 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+      "experimentalDecorators": true,
+      "target": "es5",
+      "module": "commonjs",
+      "strict": true,
+      "jsx": "preserve",
+      "baseUrl" : ".",
+      "sourceMap" : true,
+      "moduleResolution": "node",
+      "lib": ["dom", "ES2015", "ESNext"],
+      "stripInternal": true,
+      "declaration": false,
+      "rootDir" : "./src",
+      "outDir" : "./dist",
+      "removeComments": true,
+      "allowJs": false,
+      "paths": {
+        "~/*": [
+          "src/*"
+        ],
+        "tslib": [
+          "node_modules/tslib/tslib.d.ts"
+        ]
+      }
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.d.ts"
+  ]
+}

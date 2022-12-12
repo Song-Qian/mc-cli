@@ -1,0 +1,142 @@
+/**
+*   Developer   :   SongQian
+*   Time        :   2021/06/01
+*   eMail       :   onlylove1172559463@vip.qq.com
+*   Description :   皮肤变量
+**/
+$themes : ('base', 'macaron', 'china');
+
+/**
+*  基础样式变量 (蒙德里安)
+*  基准色：黄（#FFBE00），蓝（#0000FE），红（#CA1F3D），黑（#25182E），白（#FFFFFF)
+**/
+@function baseTheme($prop) {
+    
+    $themeVariables : (
+        // 布局容器颜色变量
+        "header" : #25182E,
+        "background" : #FFFFFF,
+        "menu-item__hover" : #CA1F3D,
+        //文本内容颜色变量
+        "text-color" : #FFFFFF,
+        //MagicCube 图标颜色变量
+        "magic-cube" : #CA1F3D,
+        "magic-cube-border-color" : #FFFFFF,
+        "magic-cube-shell" : rgba(202, 230, 242, .3),
+        "magic-cube-core" : #FFFFFF,
+        "magic-cube-svg-line": #CA1F3D
+    );
+
+    @return map-get($themeVariables, $prop);
+}
+
+/**
+*  马卡龙样式
+*  基准色：粉（#F38EB0），绿（#9CBE67），黄（#FCC97A），青（#CAE6F2），紫（#7B699B）
+**/
+@function macaronTheme($prop) {
+    
+    $themeVariables : (
+        // 布局容器颜色变量
+        "header" : #7B699B,
+        "background" : #CAE6F2,
+        "menu-item__hover" : #F38EB0,
+        //文本内容颜色变量
+        "text-color" : #CAE6F2,
+        //MagicCube 图标颜色变量
+        "magic-cube" : #F38EB0,
+        "magic-cube-border-color" : #CAE6F2,
+        "magic-cube-shell" : rgba(202, 230, 242, .3),
+        "magic-cube-core" : #CAE6F2,
+        "magic-cube-svg-line": #F38EB0
+    );
+    
+    @return map-get($themeVariables, $prop);
+}
+
+/**
+*  中国配色
+*  基准色：金刚（#F5B087），枇杷茶（#B47844），栜子红（#FF5218），水色（#D4E9E2）, 青水蓝（#6AC5CD），荷花白（#FDEDDD），甘草黄（#F8BE40），青灰（#102A3A）
+*  互补色：沙青（#055D8B），常青藤（#397A50），灰砖瓦（#A2A0A1），延维（#4A4B9D），青花瓷（#1F2B61），青黛色（#45465E），玉钗绿（#8BC6AF），金黄（#E66E28）
+**/
+@function chinaTheme($prop) {
+    $themeVariables : (
+        // 布局容器颜色变量
+        "header" : #45465E,
+        "background" : #FDEDDD,
+        "menu-item__hover" : #FF5218,
+        //文本内容颜色变量
+        "text-color" : #FDEDDD,
+        //MagicCube 图标颜色变量
+        "magic-cube" : #FF5218,
+        "magic-cube-border-color" : #A2A0A1,
+        "magic-cube-shell" : rgba(253, 237, 221, .3),
+        "magic-cube-core" : #FDEDDD,
+        "magic-cube-svg-line": #FF5218
+    );
+
+    @return map-get($themeVariables, $prop);
+}
+
+@function themeFactory($theme, $prop) {
+    @if $theme == 'macaron' {
+        @return macaronTheme($prop);
+    }
+    
+    @if $theme == 'china' {
+        @return chinaTheme($prop);
+    }
+
+    @return baseTheme($prop);
+}
+
+:export {
+    
+    base : {
+        header : themeFactory('base', 'header');
+        background : themeFactory('base', 'background');
+        menuItemHover: themeFactory('base', 'menu-item__hover');
+        textColor: themeFactory('base', 'text-color');
+        magicCube: themeFactory('base', 'magic-cube');
+        magicCubeBorderColor : themeFactory('base', 'magic-cube-border-color');
+        magicCubeShell : themeFactory('base', 'magic-cube-shell');
+        magicCubeCore : themeFactory('base', 'magic-cube-core');
+        magicCubeSvgLine : themeFactory('base', 'magic-cube-svg-line');
+    };
+
+    macaron : {
+        header : themeFactory('macaron', 'header');
+        background : themeFactory('macaron', 'background');
+        menuItemHover: themeFactory('macaron', 'menu-item__hover');
+        textColor: themeFactory('macaron', 'text-color');
+        magicCube: themeFactory('macaron', 'magic-cube');
+        magicCubeBorderColor : themeFactory('macaron', 'magic-cube-border-color');
+        magicCubeShell : themeFactory('macaron', 'magic-cube-shell');
+        magicCubeCore : themeFactory('macaron', 'magic-cube-core');
+        magicCubeSvgLine : themeFactory('macaron', 'magic-cube-svg-line');
+    };
+
+    china : {
+        header : themeFactory('china', 'header');
+        background : themeFactory('china', 'background');
+        menuItemHover: themeFactory('china', 'menu-item__hover');
+        textColor: themeFactory('china', 'text-color');
+        magicCube: themeFactory('china', 'magic-cube');
+        magicCubeBorderColor : themeFactory('china', 'magic-cube-border-color');
+        magicCubeShell : themeFactory('china', 'magic-cube-shell');
+        magicCubeCore : themeFactory('china', 'magic-cube-core');
+        magicCubeSvgLine : themeFactory('china', 'magic-cube-svg-line');
+    }
+
+    other : {
+        header : themeFactory('base', 'header');
+        background : themeFactory('base', 'background');
+        menuItemHover: themeFactory('base', 'menu-item__hover');
+        textColor: themeFactory('base', 'text-color');
+        magicCube: themeFactory('base', 'magic-cube');
+        magicCubeBorderColor : themeFactory('base', 'magic-cube-border-color');
+        magicCubeShell : themeFactory('base', 'magic-cube-shell');
+        magicCubeCore : themeFactory('base', 'magic-cube-core');
+        magicCubeSvgLine : themeFactory('base', 'magic-cube-svg-line');
+    }
+}
