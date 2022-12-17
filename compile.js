@@ -16,7 +16,7 @@ const cwd = process.cwd();
 if (process.argv[2] === "server") {
 
     const upkg = require(path.resolve(process.env.PWD, "./package.json"));
-    let webpack_server_args = ['-w', '--config', `${path.join(process.env.npm_config_global_prefix, "./lib/", "node_modules/mc-cli")}/webpack/webpack.server.js`, '--progress'];
+    let webpack_server_args = ['-w', '--config', `${path.join(process.env.npm_config_global_prefix, "./lib/", "node_modules/@skysong/mc-cli")}/webpack/webpack.server.js`, '--progress'];
     let child_process = spawn("webpack", webpack_server_args, { cwd, env: process.env, uid: user.uid, gid: user.gid });
     child_process.__output = '';
 
@@ -46,7 +46,7 @@ if (process.argv[2] === "server") {
 if (process.argv[2] === "client") {
 
     const upkg = require(path.resolve(process.env.PWD, "./package.json"));
-    let webpack_client = ['-w', `--config`, `${ path.join(process.env.npm_config_global_prefix, "./lib/", "node_modules/mc-cli") }/webpack/webpack.client.js`, '--progress'];
+    let webpack_client = ['-w', `--config`, `${ path.join(process.env.npm_config_global_prefix, "./lib/", "node_modules/@skysong/mc-cli") }/webpack/webpack.client.js`, '--progress'];
     let child_process = spawn("webpack", webpack_client, { cwd, env: process.env, uid: user.uid, gid: user.gid });
     child_process.__output = '';
 
