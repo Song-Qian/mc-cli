@@ -136,21 +136,21 @@ const Compile = program.command("start")
                 if (server && !server.killed) {
                     return;
                 }
-                server = spawn("node", [path.join(process.env.npm_config_global_prefix, "./lib/node_modules/mc-cli", "./compile.js"), "server"],{ cwd, env: process.env, uid: user.uid, gid: user.gid, stdio: ['inherit', 'inherit', 'inherit', 'ipc'] });
+                server = spawn("node", [path.join(process.env.npm_config_global_prefix, "./lib/node_modules/@skysong/mc-cli", "./compile.js"), "server"],{ cwd, env: process.env, uid: user.uid, gid: user.gid, stdio: ['inherit', 'inherit', 'inherit', 'ipc'] });
                 server.on("message", (res) => runtimeFn[res.code].apply(server, res.args))
             },
             "206" : () => {
                 if (client && !client.killed) {
                     return;
                 }
-                client = spawn("node", [path.join(process.env.npm_config_global_prefix, "./lib/node_modules/mc-cli", "./compile.js"), "client"],{ cwd, env: process.env, uid: user.uid, gid: user.gid, stdio: ['inherit', 'inherit', 'inherit', 'ipc'] });
+                client = spawn("node", [path.join(process.env.npm_config_global_prefix, "./lib/node_modules/@skysong/mc-cli", "./compile.js"), "client"],{ cwd, env: process.env, uid: user.uid, gid: user.gid, stdio: ['inherit', 'inherit', 'inherit', 'ipc'] });
                 client.on("message", (res) => runtimeFn[res.code].apply(client, res.args))
             },
             "207": () => {
                 if (nodemon && !nodemon.killed) {
                     return;
                 }
-                nodemon = spawn("node", [path.join(process.env.npm_config_global_prefix, "./lib/node_modules/mc-cli", "./compile.js"), "nodemon"],{ cwd, env: process.env, uid: user.uid, gid: user.gid, stdio: ['inherit', 'inherit', 'inherit', 'ipc'] });
+                nodemon = spawn("node", [path.join(process.env.npm_config_global_prefix, "./lib/node_modules/@skysong/mc-cli", "./compile.js"), "nodemon"],{ cwd, env: process.env, uid: user.uid, gid: user.gid, stdio: ['inherit', 'inherit', 'inherit', 'ipc'] });
                 nodemon.on("message", (res) => runtimeFn[res.code].apply(nodemon, res.args));
             }
         }
@@ -213,14 +213,14 @@ const Build = program.command("build")
                 if (server && !server.killed) {
                     return;
                 }
-                server = spawn("node", [path.join(process.env.npm_config_global_prefix, "./lib/node_modules/mc-cli", "./compile.js"), "server"],{ cwd, env: process.env, uid: user.uid, gid: user.gid, stdio: ['inherit', 'inherit', 'inherit', 'ipc'] });
+                server = spawn("node", [path.join(process.env.npm_config_global_prefix, "./lib/node_modules/@skysong/mc-cli", "./compile.js"), "server"],{ cwd, env: process.env, uid: user.uid, gid: user.gid, stdio: ['inherit', 'inherit', 'inherit', 'ipc'] });
                 server.on("message", (res) => runtimeFn[res.code].apply(server, res.args))
             },
             "206" : () => {
                 if (client && !client.killed) {
                     return;
                 }
-                client = spawn("node", [path.join(process.env.npm_config_global_prefix, "./lib/node_modules/mc-cli", "./compile.js"), "client"],{ cwd, env: process.env, uid: user.uid, gid: user.gid, stdio: ['inherit', 'inherit', 'inherit', 'ipc'] });
+                client = spawn("node", [path.join(process.env.npm_config_global_prefix, "./lib/node_modules/@skysong/mc-cli", "./compile.js"), "client"],{ cwd, env: process.env, uid: user.uid, gid: user.gid, stdio: ['inherit', 'inherit', 'inherit', 'ipc'] });
                 client.on("message", (res) => runtimeFn[res.code].apply(client, res.args))
             },
             "207": () => {

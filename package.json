@@ -1,6 +1,6 @@
 {
-  "name": "mc-cli",
-  "version": "1.0.0",
+  "name": "@skysong/mc-cli",
+  "version": "1.0.261",
   "description": "MagicCube 脚手架",
   "scripts": {},
   "author": "SongQian",
@@ -32,5 +32,13 @@
     "webpack": "^5.66.0",
     "webpack-cli": "^4.9.1",
     "webpack-merge": "^5.8.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Song-Qian/mc-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Song-Qian/mc-cli/issues"
+  },
+  "homepage": "https://github.com/Song-Qian/mc-cli#readme"
 }

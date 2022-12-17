@@ -8,7 +8,7 @@
 
 import MagicCube, { IRestMultiplexer, IViewMultiplexer, CreateReactRoot } from "@skysong/magic-cube"
 import ServiceSynchResolverModule from './services/resolver_modules/service_synch_resolver_module'
-import RepositorySynchResolverModule from './repositroy/resolve_modules/repository_synch_resolve'
+import RepositorySynchResolverModule from './repositroy/resolver_modules/repository_synch_resolver_module'
 import EntryReactSetup from './view/entry-server'
 
 const config = MagicCube.Config();
