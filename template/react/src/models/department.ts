@@ -9,6 +9,7 @@ export default class {
 
     id !: string;
     name !: string;
-    parne_department ?: this;
+    parent_department ?: string;
 
+    department ?: this;
 }

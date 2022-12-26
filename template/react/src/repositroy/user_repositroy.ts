@@ -49,5 +49,11 @@ export default class extends Business_UnitRepositroy<User> {
     @ForeignColumn("id", "department", "user", { onDelete: "CASCADE", onUpdate: "CASCADE" })
     @NotNullableColumn()
     deptid !: string;
+
+    $done(trx: any) {
+        const me = this;
+        me.add({ id: "1", name: "张三", age: 12, eMail: "", sex: false, deptid: "1" });
+        me.add({ id: "2", name: "李四", age: 12, eMail: "", sex: true, deptid: "1" });
+    }
     
 }
