@@ -15,6 +15,7 @@ export default class {
     age !: number;
     eMail !: string;
     sex !: boolean;
+    deptid !: string;
     
     department ?: Department;
     userRole ?: UserRole;

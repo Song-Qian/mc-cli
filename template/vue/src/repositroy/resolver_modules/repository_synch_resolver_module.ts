@@ -7,7 +7,7 @@
  */
  import { interfaces } from 'inversify'
 
- import { IServiceSynchResolverModule } from '@skysong/magic-cube'
+ import MagicCube, { IServiceSynchResolverModule, ConnectionFactory } from '@skysong/magic-cube'
  import UserRepository from '../user_repositroy'
  import RoleRepository from '../role_repositroy'
  import UserRoleRepository from '../user_role_repositroy'
@@ -27,15 +27,18 @@ export default class RepositorySynchResolverModule implements IServiceSynchResol
  
   public get loader(): interfaces.ContainerModuleCallBack {
     return (bind, unbind, isBound, rebind) => {
-       
-      bind(Symbol.for('magic:table')).to(DepartmentRepository);
-      bind(Symbol.for('magic:table')).to(UserRepository);
-      bind(Symbol.for('magic:table')).to(RoleRepository);
-      bind(Symbol.for('magic:table')).to(UserRoleRepository);
-      bind(Symbol.for('magic:table')).to(Example);
+      
+      const config = MagicCube.Config();
+      bind(Symbol.for('magic:dbContext')).toDynamicValue(ConnectionFactory(config.get("database"))).inSingletonScope();
+
+      bind(Symbol.for('magic:table')).to(DepartmentRepository).whenTargetNamed(Symbol.for('magic:department'));
+      bind(Symbol.for('magic:table')).to(UserRepository).whenTargetNamed(Symbol.for('magic:user'));
+      bind(Symbol.for('magic:table')).to(RoleRepository).whenTargetNamed(Symbol.for('magic:role'));
+      bind(Symbol.for('magic:table')).to(UserRoleRepository).whenTargetNamed(Symbol.for('magic:user_role'));
+      bind(Symbol.for('magic:table')).to(Example).whenTargetNamed(Symbol.for('magic:example'));
 
       /// View Create
-      bind(Symbol.for('magic:table')).to(JurisdictionView);
+      bind(Symbol.for('magic:table')).to(JurisdictionView).whenTargetNamed(Symbol.for('magic:jurisdiction'));
       
     }
   }

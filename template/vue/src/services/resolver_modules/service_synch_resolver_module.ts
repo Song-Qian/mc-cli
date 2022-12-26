@@ -21,7 +21,6 @@ export default class ServiceSynchResolverModule implements IServiceSynchResolver
 
   public get loader(): interfaces.ContainerModuleCallBack {
     return (bind, unbind, isBound, rebind) => {
-      
       // bind<HttpService<any>>(Symbol.for('magic:rest')).to(UserService).whenTargetNamed(Symbol.for('magic:user'));
       bind<HttpService<any>>(Symbol.for('magic:rest')).to(UserService);
       

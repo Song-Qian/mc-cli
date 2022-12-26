@@ -34,7 +34,11 @@ export default class extends Business_UnitRepositroy<Department> {
 
     @TableColumn("p_department", TableColumnEnum.String, "上级部门", [30])
     @ForeignColumn("id", "department", "department", { onDelete: "CASCADE", onUpdate: "CASCADE" })
-    @NotNullableColumn()
     parent_department !: string;
+
+    $done(trx: any) {
+        const me = this;
+        me.add({ id: "1", name: "测试" });
+    }
 
 }
