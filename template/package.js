@@ -16,6 +16,7 @@ module.exports = (frame) => {
             "dependencies": {
                 "@babel/runtime-corejs3": "^7.16.3",
                 "@vue/server-renderer": "^3.2.26",
+                "@skysong/magic-cube": "^1.0.268",
                 "axios": "^0.26.0",
                 "pinia": "^2.0.11",
                 "tiny-emitter": "^2.1.0",
@@ -32,7 +33,6 @@ module.exports = (frame) => {
                 "@babel/plugin-transform-typescript": "^7.16.1",
                 "@babel/preset-env": "^7.16.0",
                 "@babel/preset-typescript": "^7.16.0",
-                "@skysong/magic-cube": "^0.0.260",
                 "@vue/babel-plugin-jsx": "^1.1.1",
                 "babel-loader": "^8.2.2",
                 "ts-loader": "^9.2.6",
@@ -65,7 +65,7 @@ module.exports = (frame) => {
         "main": "index.js",
         "dependencies": {
             "@babel/runtime-corejs3": "^7.16.3",
-            "@skysong/magic-cube": "^0.0.260",
+            "@skysong/magic-cube": "^1.0.268",
             "@types/react-dom": "^17.0.11",
             "axios": "^0.24.0",
             "react": "^17.0.2",
