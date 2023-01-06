@@ -51,7 +51,7 @@ export default class extends Business_UnitRepositroy<Model> {
      * @description: 当 @DropTableIfExists 规则正常持行，并且当前存在example表存在，则此钩子是表被删除后调用。
      * @return {*} 无
      */    
-    async $afterDropTable(trx: any) : Promise<void> { }
+    $afterDropTable(trx: any) : Promise<void> | void { }
 
     /**
      * @LastEditors: SongQian
