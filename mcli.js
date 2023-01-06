@@ -13,7 +13,7 @@ const package = require("./template/package")
 
 // aix, darwin, freebsd, linux, openbsd, sunos, win32
 // 'arm', 'arm64', 'ia32', 'mips', 'mipsel', 'ppc', 'ppc64', 's390', 's390x', 'x64'
-// const platform = os.platform();
+const platform = os.platform();
 // const arch = os.arch();
 const cwd = process.cwd();
 const spinner = ora();
@@ -50,8 +50,9 @@ program.command("init")
                     return;
                 }
     
+                const execPath = platform === 'win32' ? path.join(process.execPath, "../") : path.join(process.execPath, "../../lib");
                 fs.mkdirSync(`${cwd}/${answer.name}`, { recursive: true, mode: 0o777 });
-                let source = answer.frame === "vue" ?  path.join(process.env._, "../../lib", "node_modules/@skysong/mc-cli/template/vue") : path.join(process.env._, "../../lib", "node_modules/@skysong/mc-cli/template/react");
+                let source = answer.frame === "vue" ?  path.join(execPath, "node_modules/@skysong/mc-cli/template/vue") : path.join(execPath, "node_modules/@skysong/mc-cli/template/react");
                 fs.cpSync(source, `${cwd}/${answer.name}`, { recursive: true, force: true });
                 const cur_pkg = package(answer.frame);
                 cur_pkg.name = answer.name;
@@ -60,7 +61,7 @@ program.command("init")
                 cur_pkg.description = answer.description;
                 const data = new Uint8Array(Buffer.from(JSON.stringify(cur_pkg)));
                 fs.writeFileSync(`${cwd}/${answer.name}/package.json`, data, "utf8");
-                fs.cpSync(path.join(process.env._, "../../lib", "node_modules/@skysong/mc-cli/template/default.ini"), `${cwd}/${answer.name}/default.ini`, { force: true, recursive: true });
+                fs.cpSync(path.join(execPath, "node_modules/@skysong/mc-cli/template/default.ini"), `${cwd}/${answer.name}/default.ini`, { force: true, recursive: true });
     
                 if (answer.db) {
                     let conf = fs.readFileSync(`${cwd}/${answer.name}/default.ini`, 'utf8');
