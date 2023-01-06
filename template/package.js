@@ -16,7 +16,7 @@ module.exports = (frame) => {
             "dependencies": {
                 "@babel/runtime-corejs3": "^7.16.3",
                 "@vue/server-renderer": "^3.2.26",
-                "@skysong/magic-cube": "^1.0.271",
+                "@skysong/magic-cube": "^1.0.272",
                 "axios": "^0.26.0",
                 "pinia": "^2.0.11",
                 "tiny-emitter": "^2.1.0",
@@ -65,7 +65,7 @@ module.exports = (frame) => {
         "main": "index.js",
         "dependencies": {
             "@babel/runtime-corejs3": "^7.16.3",
-            "@skysong/magic-cube": "^1.0.271",
+            "@skysong/magic-cube": "^1.0.272",
             "@types/react-dom": "^17.0.11",
             "axios": "^0.24.0",
             "react": "^17.0.2",
