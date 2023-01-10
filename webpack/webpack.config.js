@@ -31,7 +31,9 @@ module.exports = merge({
     ...plugins()
   ],
   performance: {
-    hints: process.env.NODE_ENV === 'production' ? false : 'error'
+    hints: process.env.NODE_ENV === 'production' ? false : 'error',
+	maxEntrypointSize: process.env.NODE_ENV === 'development' ? 1024 * 1024 * 10 : 1024 * 1024 * 3,
+	maxAssetSize: process.env.NODE_ENV === 'development' ? 1024 * 1024 * 10 : 1024 * 1024 * 3
   },
   //生产时，请将此处的devtool改成false
   devtool: process.env.NODE_ENV === 'production' ? false : "source-map"

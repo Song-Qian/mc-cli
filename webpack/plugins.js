@@ -11,13 +11,18 @@ const cwd = process.cwd();
 
 module.exports = function() {
 
-    let copyPlugin = new CopyWebpackPlugin({
-        patterns: [
-            { from: path.resolve(cwd, './node_modules/oracledb/build/Release/*.node'), to: path.join(process.env.LD_LIBRARY_PATH, "[name][ext]") }
-        ]
-    })
+	if (Boolean(process.env.LD_LIBRARY_PATH)) {
+		let copyPlugin = new CopyWebpackPlugin({
+			patterns: [
+				{ from: path.resolve(cwd, 'node_modules/oracledb/build/Release/oracledb-5.5.0-darwin-x64.node'), to: process.env.LD_LIBRARY_PATH, force: true },
+				{ from: path.resolve(cwd, 'node_modules/oracledb/build/Release/oracledb-5.5.0-linux-x64.node'), to: process.env.LD_LIBRARY_PATH, force: true },
+				{ from: path.resolve(cwd, 'node_modules/oracledb/build/Release/oracledb-5.5.0-win32-x64.node'), to: process.env.LD_LIBRARY_PATH, force: true }
+			]
+		})
 
-    return [
-        copyPlugin
-    ]
+		return [
+			copyPlugin
+		]
+	}
+	return [];
 }

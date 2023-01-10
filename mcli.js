@@ -7,7 +7,7 @@ const inquirer = require('inquirer');
 const fs = require("fs");
 const os = require("os");
 const path = require("path");
-const { spawn } = require("child_process");
+const { spawn, exec } = require("child_process");
 const pkg = require("./package.json");
 const package = require("./template/package")
 
@@ -114,7 +114,8 @@ const Compile = program.command("start")
         const isEnterClientJS = fs.existsSync(option.vue ?`${cwd}/src/view/entry-client.ts` : `${cwd}/src/view/entry-client.tsx`);
         const isServerJS = fs.existsSync(`${cwd}/src/index.ts`);
         const isExistsDist = fs.existsSync(`${cwd}/dist`);
-        const upkg = require(path.resolve(process.env.PWD, "./package.json"));
+        const upkg = require(path.resolve(cwd, "./package.json"));
+        const execPath = platform === 'win32' ? path.join(process.execPath, "../") : path.join(process.execPath, "../../lib");
 
         if (!isEnterClientJS || !isServerJS) {
             proce.stop();
@@ -137,21 +138,21 @@ const Compile = program.command("start")
                 if (server && !server.killed) {
                     return;
                 }
-                server = spawn("node", [path.join(process.env.npm_config_global_prefix, "./lib/node_modules/@skysong/mc-cli", "./compile.js"), "server"],{ cwd, env: process.env, uid: user.uid, gid: user.gid, stdio: ['inherit', 'inherit', 'inherit', 'ipc'] });
+                server = platform === "win32" ? spawn("node", [path.join(execPath, "./node_modules/@skysong/mc-cli", "./compile.js"), "server"],{ cwd, env: process.env, stdio: ['inherit', 'inherit', 'inherit', 'ipc'] }) : spawn("node", [path.join(execPath, "./node_modules/@skysong/mc-cli", "./compile.js"), "server"],{ cwd, env: process.env, uid: user.uid, gid: user.gid, stdio: ['inherit', 'inherit', 'inherit', 'ipc'] });
                 server.on("message", (res) => runtimeFn[res.code].apply(server, res.args))
             },
             "206" : () => {
                 if (client && !client.killed) {
                     return;
                 }
-                client = spawn("node", [path.join(process.env.npm_config_global_prefix, "./lib/node_modules/@skysong/mc-cli", "./compile.js"), "client"],{ cwd, env: process.env, uid: user.uid, gid: user.gid, stdio: ['inherit', 'inherit', 'inherit', 'ipc'] });
+                client =  platform === "win32" ? spawn("node", [path.join(execPath, "./node_modules/@skysong/mc-cli", "./compile.js"), "client"],{ cwd, env: process.env, stdio: ['inherit', 'inherit', 'inherit', 'ipc'] }) : spawn("node", [path.join(execPath, "./node_modules/@skysong/mc-cli", "./compile.js"), "client"],{ cwd, env: process.env, uid: user.uid, gid: user.gid, stdio: ['inherit', 'inherit', 'inherit', 'ipc'] });
                 client.on("message", (res) => runtimeFn[res.code].apply(client, res.args))
             },
             "207": () => {
                 if (nodemon && !nodemon.killed) {
                     return;
                 }
-                nodemon = spawn("node", [path.join(process.env.npm_config_global_prefix, "./lib/node_modules/@skysong/mc-cli", "./compile.js"), "nodemon"],{ cwd, env: process.env, uid: user.uid, gid: user.gid, stdio: ['inherit', 'inherit', 'inherit', 'ipc'] });
+                nodemon = platform === "win32" ? spawn("node", [path.join(execPath, "./node_modules/@skysong/mc-cli", "./compile.js"), "nodemon"],{ cwd, env: process.env, stdio: ['inherit', 'inherit', 'inherit', 'ipc'] }) : spawn("node", [path.join(execPath, "./node_modules/@skysong/mc-cli", "./compile.js"), "nodemon"],{ cwd, env: process.env, uid: user.uid, gid: user.gid, stdio: ['inherit', 'inherit', 'inherit', 'ipc'] });
                 nodemon.on("message", (res) => runtimeFn[res.code].apply(nodemon, res.args));
             }
         }
@@ -191,7 +192,8 @@ const Build = program.command("build")
         const isEnterClientJS = fs.existsSync(option.vue ?`${cwd}/src/view/entry-client.ts` : `${cwd}/src/view/entry-client.tsx`);
         const isServerJS = fs.existsSync(`${cwd}/src/index.ts`);
         const isExistsDist = fs.existsSync(`${cwd}/dist`);
-        const upkg = require(path.resolve(process.env.PWD, "./package.json"));
+        const upkg = require(path.resolve(cwd, "./package.json"));
+        const execPath = platform === 'win32' ? path.join(process.execPath, "../") : path.join(process.execPath, "../../lib");
 
         if (!isEnterClientJS || !isServerJS) {
             proce.stop();
@@ -214,14 +216,14 @@ const Build = program.command("build")
                 if (server && !server.killed) {
                     return;
                 }
-                server = spawn("node", [path.join(process.env.npm_config_global_prefix, "./lib/node_modules/@skysong/mc-cli", "./compile.js"), "server"],{ cwd, env: process.env, uid: user.uid, gid: user.gid, stdio: ['inherit', 'inherit', 'inherit', 'ipc'] });
+                server = platform === "win32" ? spawn("node", [path.join(execPath, "./node_modules/@skysong/mc-cli", "./compile.js"), "server"],{ cwd, env: process.env, stdio: ['inherit', 'inherit', 'inherit', 'ipc'] }) : spawn("node", [path.join(execPath, "./node_modules/@skysong/mc-cli", "./compile.js"), "server"],{ cwd, env: process.env, uid: user.uid, gid: user.gid, stdio: ['inherit', 'inherit', 'inherit', 'ipc'] });
                 server.on("message", (res) => runtimeFn[res.code].apply(server, res.args))
             },
             "206" : () => {
                 if (client && !client.killed) {
                     return;
                 }
-                client = spawn("node", [path.join(process.env.npm_config_global_prefix, "./lib/node_modules/@skysong/mc-cli", "./compile.js"), "client"],{ cwd, env: process.env, uid: user.uid, gid: user.gid, stdio: ['inherit', 'inherit', 'inherit', 'ipc'] });
+                client = platform === "win32" ? spawn("node", [path.join(execPath, "./node_modules/@skysong/mc-cli", "./compile.js"), "client"],{ cwd, env: process.env, stdio: ['inherit', 'inherit', 'inherit', 'ipc'] }) : spawn("node", [path.join(execPath, "./node_modules/@skysong/mc-cli", "./compile.js"), "client"],{ cwd, env: process.env, uid: user.uid, gid: user.gid, stdio: ['inherit', 'inherit', 'inherit', 'ipc'] });
                 client.on("message", (res) => runtimeFn[res.code].apply(client, res.args))
             },
             "207": () => {
