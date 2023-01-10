@@ -18,7 +18,7 @@ const execPath = platform === 'win32' ? path.join(process.execPath, "../") : pat
 if (process.argv[2] === "server") {
 
     const upkg = require(path.resolve(cwd, "./package.json"));
-    let webpack_server_args = ['-w', '--config', `${path.join(execPath, "node_modules/@skysong/mc-cli")}/webpack/webpack.server.js`, '--progress'];
+    let webpack_server_args = ['-w', '--config', `${path.resolve(execPath, "node_modules/@skysong/mc-cli")}/webpack/webpack.server.js`, '--progress'];
     let child_process = platform === "win32" ?  spawn("webpack", webpack_server_args, { cwd, env: process.env, shell: true }) : spawn("webpack", webpack_server_args, { cwd, env: process.env, uid: user.uid, gid: user.gid });
     //child_process.__output = '';
     child_process.stdout.on('data', (data) => {
@@ -76,7 +76,7 @@ if (process.argv[2] === "client") {
 if (process.argv[2] === "nodemon") {
 	
     let dev_node = ['--watch', `${cwd}/dist`, `--inspect-brk=${process.env.port} ${cwd}/dist/index.build.js`];
-    let child_process = platform === "win32" ? spawn("nodemon", dev_node, { cwd, env: process.env, shell: true }) : spawn("nodemon", dev_node, { cwd, env: process.env, uid: user.uid, gid: user.gid });
+    let child_process = platform === "win32" ? spawn("nodemon", dev_node, { cwd, env: process.env, shell: true }) : exec(`nodemon ${dev_node.join(' ')}`, { cwd, env: process.env, uid: user.uid, gid: user.gid });
 
     child_process.stdout.on('data', (data) => {
         let text = data.toString().replace(/^(\s+)$/ig, '');
