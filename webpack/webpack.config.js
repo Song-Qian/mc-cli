@@ -1,6 +1,6 @@
 /*
  * @Author: SongQian
- * @LastEditors: SongQian
+ * @LastEditors: @skysong
  * @Date: 2022/11/28 21:56
  * @eMail: onlylove1172559463@vip.qq.com
  * @Description: webpack.config 入口配置
@@ -31,9 +31,9 @@ module.exports = merge({
     ...plugins()
   ],
   performance: {
-    hints: process.env.NODE_ENV === 'production' ? false : 'error',
-	maxEntrypointSize: process.env.NODE_ENV === 'development' ? 1024 * 1024 * 10 : 1024 * 1024 * 3,
-	maxAssetSize: process.env.NODE_ENV === 'development' ? 1024 * 1024 * 10 : 1024 * 1024 * 3
+    hints: false,
+    // maxEntrypointSize: process.env.NODE_ENV === 'development' ? 1024 * 1024 * 10 : 1024 * 1024 * 3,
+    // maxAssetSize: process.env.NODE_ENV === 'development' ? 1024 * 1024 * 10 : 1024 * 1024 * 3
   },
   //生产时，请将此处的devtool改成false
   devtool: process.env.NODE_ENV === 'production' ? false : "source-map"

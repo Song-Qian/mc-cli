@@ -1,6 +1,6 @@
 /*
  * @Author: SongQian
- * @LastEditors: SongQian
+ * @LastEditors: @skysong
  * @Date: 2022/11/28 21:40
  * @eMail: onlylove1172559463@vip.qq.com
  * @Description: 生产编译处理配置
@@ -86,17 +86,17 @@ module.exports = function(skinExtract) {
 
     const loaders = [];
     if (process.env.LD_LIBRARY_PATH) {
-		loaders.push({
-			test: /(magic-cube)(\.prod)?\.js$/,
-			loader: 'string-replace-loader',
-			options: {
-			  search: 'oracledbCLib = requireBinary(binaryLocations[i])',
-			  replace: "oracledbCLib = __non_webpack_require__(process.env.LD_LIBRARY_PATH + '/' + nodbUtil.BINARY_FILE)"
-			}
-		}, {
-			test: /\.node$/i,
-			use: "node-loader"
-		})
+      loaders.push({
+        test: /(magic-cube)(\.prod)?\.js$/,
+        loader: 'string-replace-loader',
+        options: {
+          search: 'oracledbCLib = requireBinary(binaryLocations[i])',
+          replace: "oracledbCLib = __non_webpack_require__(process.env.LD_LIBRARY_PATH + '/' + nodbUtil.BINARY_FILE)"
+        }
+      }, {
+        test: /\.node$/i,
+        use: "node-loader"
+      })
     }
     
     return [

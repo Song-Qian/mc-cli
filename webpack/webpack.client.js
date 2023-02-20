@@ -1,6 +1,6 @@
 /*
  * @Author: SongQian
- * @LastEditors: SongQian
+ * @LastEditors: @skysong
  * @Date: 2022/11/28 22:17
  * @eMail: onlylove1172559463@vip.qq.com
  * @Description: NodeJS 运行环境代码打包.
@@ -27,14 +27,14 @@ module.exports = merge(webpack, {
    devtool: process.env.NODE_ENV === 'production' ? false : "source-map",
    // 构建为单个 JSON 文件的插件。
    plugins : [
-     new HtmlWebpackPlugin({
-         title : "magic cube",
-         filename: "index.html",
-         template: "index.html",
-         cache: false,
-         inject: 'body',
-         minify: false,
-         favicon: join(cwd, "./static", "images/favicon.ico")
-     })
+      new HtmlWebpackPlugin({
+          title : "magic cube",
+          filename: "index.html",
+          template: "index.html",
+          cache: false,
+          inject: 'body',
+          minify: false,
+          favicon: join(cwd, "./static", "images/favicon.ico")
+      })
    ]
 })

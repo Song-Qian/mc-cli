@@ -87,6 +87,8 @@ program.command("init")
 const Compile = program.command("start")
     .option("-v, --vue", "运行 vue 3.0 模板")
     .option("-r, --react", "运行 react 16.8+ 模板")
+    .option("-e, --electron", "是否桌面应用")
+    .option("--electron-port [port]", "桌面应用调试端口，默认: 3031")
     .option("-vapi, --vue-options-api", "是否启用Vue Option API")
     .option("-vtools, --vue-prod-devtools", "是否启用Vue Devtools")
     .option("-pro, --prod", "production 模式启动")
@@ -104,8 +106,11 @@ const Compile = program.command("start")
         }
 
         process.env.port = typeof option.port === "number" ? option.port : 3030;
-        process.env.NODE_ENV = option.pord ? "production" : "development";
+        process.env.NODE_ENV = option.prod ? "production" : "development";
+        process.env.Electron = option.electron;
         process.env.SSR = option.react ? "React" : "Vue";
+        process.env.electron_port = typeof option.electronPort === "number" ? option.electronPort : 3031;
+
         if (!option.react) {
             process.env.__VUE_OPTIONS_API__ = Boolean(option.vue && option.vueOptionsApi);
             process.env.__VUE_PROD_DEVTOOLS__ = Boolean(option.vue && option.vueProdDevtools);
@@ -127,7 +132,7 @@ const Compile = program.command("start")
         }
 
         spinner.start(chalk.green(`启动《${upkg.name}》项目`));
-        let server, client, nodemon;
+        let server, client, electron, nodemon;
 
         const runtimeFn = {
             "200" : (text) => {
@@ -149,6 +154,13 @@ const Compile = program.command("start")
                 client.on("message", (res) => runtimeFn[res.code].apply(client, res.args))
             },
             "207": () => {
+                if (electron && !electron.killed) {
+                    return;
+                }
+                electron = platform === "win32" ? spawn("node", [path.join(execPath, "./node_modules/@skysong/mc-cli", "./compile.js"), "electron"],{ cwd, env: process.env, stdio: ['inherit', 'inherit', 'inherit', 'ipc'] }) : spawn("node", [path.join(execPath, "./node_modules/@skysong/mc-cli", "./compile.js"), "electron"],{ cwd, env: process.env, uid: user.uid, gid: user.gid, stdio: ['inherit', 'inherit', 'inherit', 'ipc'] });
+                electron.on("message", (res) => runtimeFn[res.code].apply(electron, res.args))
+            },
+            "208": () => {
                 if (nodemon && !nodemon.killed) {
                     return;
                 }
@@ -168,22 +180,25 @@ const Compile = program.command("start")
 const Build = program.command("build")
     .option("-v, --vue", "运行 vue 3.0 模板")
     .option("-r, --react", "运行 react 16.8+ 模板")
+    .option("-e, --electron", "是否桌面应用")
     .option("-vapi, --vue-options-api", "是否启用Vue Option API")
     .option("-vtools, --vue-prod-devtools", "是否启用Vue Devtools")
     .description("《MagicCube》项目生产打包")
     .action(function(option) {
         if (!option.vue && !option.react) {
-            Build.help((txt) => [logSymbols.error, chalk.red("启动失败，缺失Options命令.\n"), chalk.cyan(txt)].join(" "));
+            Compile.help((txt) => [logSymbols.error, chalk.red("启动失败，缺失Options命令.\n"), chalk.cyan(txt)].join(" "));
             return;
         }
 
         if (!option.vue && (option.vueOptionsApi || option.vueProdDevtools)) {
-            Build.help((txt) => [logSymbols.error, chalk.red("启用Vue Api模式，但缺失-v, --vue命令.\n"), chalk.cyan(txt)].join(" "));
+            Compile.help((txt) => [logSymbols.error, chalk.red("启用Vue Api模式，但缺失-v, --vue命令.\n"), chalk.cyan(txt)].join(" "));
             return;
         }
 
         process.env.NODE_ENV = "production";
+        process.env.Electron = option.electron;
         process.env.SSR = option.react ? "React" : "Vue";
+
         if (!option.react) {
             process.env.__VUE_OPTIONS_API__ = Boolean(option.vue && option.vueOptionsApi);
             process.env.__VUE_PROD_DEVTOOLS__ = Boolean(option.vue && option.vueProdDevtools);
@@ -197,15 +212,15 @@ const Build = program.command("build")
 
         if (!isEnterClientJS || !isServerJS) {
             proce.stop();
-            proce.fail(chalk.red(` 《${upkg.name}》 编译入口文件找不到，请确认项目地址正确!`));
+            proce.fail(chalk.red(`《${upkg.name}》 启动入口文件找不到，请确认项目地址正确!`));
             console.log([logSymbols.warning, chalk.yellow(`可以尝试使用 mc-cli init ${option.vue ? '<-v, --vue>' : '<-r, --react>'} <projectName> 恢复项目.`)].join(""));
             console.log([logSymbols.warning, chalk.yellow(`  错误启动地址：${ option.vue ? `${cwd}/src/view/entry-client.ts` : `${cwd}/src/view/entry-client.tsx` }`)].join(""));
             console.log([logSymbols.warning, chalk.yellow(`  错误启动地址：${cwd}/src/index.ts`)].join(""));
             return;
         }
 
-        spinner.start(chalk.green(`开始编译《${upkg.name}》项目 \n`));
-        let server, client;
+        spinner.start(chalk.green(`开始《${upkg.name}》项目\n`));
+        let server, client, electron;
 
         const runtimeFn = {
             "200" : (text) => {
@@ -227,8 +242,16 @@ const Build = program.command("build")
                 client.on("message", (res) => runtimeFn[res.code].apply(client, res.args))
             },
             "207": () => {
+                if (electron && !electron.killed) {
+                    return;
+                }
+                electron = platform === "win32" ? spawn("node", [path.join(execPath, "./node_modules/@skysong/mc-cli", "./compile.js"), "electron"],{ cwd, env: process.env, stdio: ['inherit', 'inherit', 'inherit', 'ipc'] }) : spawn("node", [path.join(execPath, "./node_modules/@skysong/mc-cli", "./compile.js"), "electron"],{ cwd, env: process.env, uid: user.uid, gid: user.gid, stdio: ['inherit', 'inherit', 'inherit', 'ipc'] });
+                electron.on("message", (res) => runtimeFn[res.code].apply(electron, res.args))
+            },
+            "208": () => {
                 server && !server.killed && server.kill();
                 client && !client.killed && client.kill();
+                electron && !electron.killed && electron.kill();
                 spinner.succeed(chalk.green(`编译完成《${upkg.name}》 完成\n`));
                 console.log(chalk.green('请使用： node ./dist/index.build.js 启动项目'));
             }

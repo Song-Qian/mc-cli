@@ -3,7 +3,7 @@
  * @LastEditors: @skysong
  * @Date: 2022/11/28 22:23
  * @eMail: onlylove1172559463@vip.qq.com
- * @Description: NodeJS 运行环境代码打包
+ * @Description: Electron 运行环境代码打包
  */
 const path = require('path')
 const { merge } = require('webpack-merge')
@@ -12,13 +12,13 @@ const cwd = process.cwd()
 
 module.exports = merge(webpack, {
   entry: {
-  'index': path.resolve(cwd, './src/index')
+    'main': path.resolve(cwd, './src/app')
   },
   output: {
     libraryTarget : 'umd'
   },
   //运行目标平台
-  target : 'node',
+  target : 'electron-main',
   // 对 bundle renderer 提供 source map 支持
   //生产时，请将此处的devtool改成false
   // devtool: process.env.NODE_ENV === 'production' ? false : "source-map",
