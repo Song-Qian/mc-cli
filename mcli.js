@@ -7,7 +7,7 @@ const inquirer = require('inquirer');
 const fs = require("fs");
 const os = require("os");
 const path = require("path");
-const { spawn, exec } = require("child_process");
+const { spawn } = require("child_process");
 const pkg = require("./package.json");
 const package = require("./template/package")
 
@@ -62,9 +62,10 @@ program.command("init")
                 const data = new Uint8Array(Buffer.from(JSON.stringify(cur_pkg)));
                 fs.writeFileSync(`${cwd}/${answer.name}/package.json`, data, "utf8");
                 fs.cpSync(path.join(execPath, "node_modules/@skysong/mc-cli/template/default.ini"), `${cwd}/${answer.name}/default.ini`, { force: true, recursive: true });
+                let conf = fs.readFileSync(`${cwd}/${answer.name}/default.ini`, 'utf8');
+                conf = conf.replace('name = "magic app"', `name = "${answer.name}"`);
     
                 if (answer.db) {
-                    let conf = fs.readFileSync(`${cwd}/${answer.name}/default.ini`, 'utf8');
                     conf = conf.replace('; [database]', '[database]').replace('; logger = true', 'logger = true').replace('; client = "mysql"', `client = "${answer.dbType}"`);
                     conf = conf.replace('; [database.connection]', '[database.connection]').replace('; user = "root"', `user = "${answer.dbuname}"`).replace('; password = "123456"', `password = "${answer.dbpwd}"`).replace('; timeout = 60000', 'timeout = 6000');
                     conf = conf.replace('; [database.pool]', '[database.pool]').replace('; min = 0', 'min = 0').replace('; max = 100', 'max = 100');
