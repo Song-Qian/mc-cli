@@ -30,6 +30,7 @@ program.command("init")
             { type: "input", message: "请输入项目版本号：", name: "version", default: "0.0.1" },
             { type: "input", message: "请输入项目描述:", name: "description", default: "" },
             { type: "list", message: "请选择一个前端项目框架:", name: "frame", default: "vue", choices: ["vue", "react"] },
+            { type: "confirm", message: "是否启用electron桌面应用开发", name: "electron", default: false },
             { type: "input", message: "开发者：", name: "author", default: user.username },
             { type: "input", message: "请输入服务启动访问IP:", name: "ip", default: 'localhost', validate: (ip) => Boolean(/^((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])$/.test(ip) || ip === "localhost") || "服务启动IP非法输入!" },
             { type: "input", message: "请输入服务启动访问端口:", name: "port", default: 8080, validate: (port) => 65535 < +port  || 0 > +port ? "端口号超出预判范围!" : true },
@@ -54,7 +55,10 @@ program.command("init")
                 fs.mkdirSync(`${cwd}/${answer.name}`, { recursive: true, mode: 0o777 });
                 let source = answer.frame === "vue" ?  path.join(execPath, "node_modules/@skysong/mc-cli/template/vue") : path.join(execPath, "node_modules/@skysong/mc-cli/template/react");
                 fs.cpSync(source, `${cwd}/${answer.name}`, { recursive: true, force: true });
-                const cur_pkg = package(answer.frame);
+                answer.electron ? void 0 : fs.rmSync(`${cwd}/${answer.name}/src/commons/keyboard-events.ts`, { recursive: true, force: true });
+                answer.electron ? void 0 : fs.rmSync(`${cwd}/${answer.name}/src/app.ts`, { recursive: true, force: true });
+
+                const cur_pkg = package(answer.frame, answer.electron);
                 cur_pkg.name = answer.name;
                 cur_pkg.version = answer.version;
                 cur_pkg.author = answer.author;

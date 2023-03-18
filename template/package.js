@@ -1,18 +1,18 @@
 /*
  * @Author: SongQian
- * @LastEditors: SongQian
+ * @LastEditors: @skysong
  * @Date: 2022/12/09 14:57
  * @eMail: onlylove1172559463@vip.qq.com
  * @Description: 项目初始化配置文件
  */
 
-module.exports = (frame) => {
+module.exports = (frame, electron) => {
     if (frame === "vue") {
         return {
             "name": "",
             "version": "",
             "description": "",
-            "main": "index.js",
+            "main": electron ? "./dist/main.build.js" : "./dist/index.build.js",
             "dependencies": {
                 "@babel/runtime-corejs3": "^7.16.3",
                 "@vue/server-renderer": "^3.2.26",
@@ -62,7 +62,7 @@ module.exports = (frame) => {
         "name": "",
         "version": "",
         "description": "",
-        "main": "index.js",
+        "main": electron ? "./dist/main.build.js" : "./dist/index.build.js",
         "dependencies": {
             "@babel/runtime-corejs3": "^7.16.3",
             "@skysong/magic-cube": "^1.0.275",
