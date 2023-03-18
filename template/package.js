@@ -23,7 +23,7 @@ module.exports = (frame, electron) => {
                 "vue": "^3.2.27",
                 "vue-router": "^4.0.12"
             },
-            "devDependencies": {
+            "devDependencies": Object.assign({
                 "@babel/core": "^7.16.0",
                 "@babel/plugin-proposal-class-properties": "^7.18.6",
                 "@babel/plugin-proposal-decorators": "^7.18.10",
@@ -41,7 +41,7 @@ module.exports = (frame, electron) => {
                 "sass-loader": "^12.3.0",
                 "string-replace-loader": "^3.1.0",
                 "webpack-cli": "^4.9.1"
-            },
+            }, electron ? { "electron": "^23.0.0" }: {}),
             "scripts": {
                 "dev": "mc-cli start -v -vapi -vtools",
                 "prod": "mc-cli start -v -vapi -vtools -pro",
@@ -74,7 +74,7 @@ module.exports = (frame, electron) => {
             "redux": "^4.1.2",
             "swr": "^1.1.2"
         },
-        "devDependencies": {
+        "devDependencies": Object.assign({
             "@babel/core": "^7.16.0",
             "@babel/plugin-proposal-class-properties": "^7.18.6",
             "@babel/plugin-syntax-decorators": "^7.16.0",
@@ -92,7 +92,7 @@ module.exports = (frame, electron) => {
             "sass-loader": "^12.3.0",
             "string-replace-loader": "^3.1.0",
             "webpack-cli": "^4.9.1"
-        },
+        }, electron ? { "electron": "^23.0.0" }: {}),
         "scripts": {
             "dev": "mc-cli start --react",
             "prod": "mc-cli start --react -pro",
